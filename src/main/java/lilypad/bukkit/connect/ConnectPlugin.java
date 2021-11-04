@@ -39,7 +39,7 @@ public class ConnectPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		String version = super.getServer().getClass().getPackage().getName().replace(".",  ",").split(",")[3];
+		/*String version = super.getServer().getClass().getPackage().getName().replace(".",  ",").split(",")[3];
 		switch (version) {
 		case "v1_8_R1":
 			protocol = new Protocol1_8_R1();
@@ -80,16 +80,16 @@ public class ConnectPlugin extends JavaPlugin {
 		default:
 			Bukkit.getLogger().info("[Connect] Unable to start plugin - unsupported version (" + version + "). Please retrieve the newest version at http://lilypadmc.org");
 			return;
-		}
+		}*/
 
-		try {
+		//try {
 			// Modify handshake packet max string size
 			// -- as of 1.8 I do not believe this is necessary anymore
 			/*if (!protocol.getGeneralVersion().equals("1.10")) {
 				PacketInjector.injectStringMaxSize(super.getServer(), "handshaking", 0x00, 65535);
 			}*/
 			// Handle LilyPad handshake packet
-			commonPort = NettyInjector.injectAndFindPort(super.getServer(), new LoginNettyInjectHandler(this, payloadCache));
+			/*commonPort = NettyInjector.injectAndFindPort(super.getServer(), new LoginNettyInjectHandler(this, payloadCache));
 			// If we are in online-mode
 			if (super.getServer().getOnlineMode()) {
 				// Prioritize our events
@@ -102,13 +102,13 @@ public class ConnectPlugin extends JavaPlugin {
 			exception.printStackTrace();
 			Bukkit.getLogger().info("[Connect] Unable to start plugin - unsupported version?");
 			return;
-		}
+		}*/
 
 		this.connect = new ConnectImpl(new ConnectSettingsImpl(super.getConfig()), this.getInboundAddress().getAddress().getHostAddress());
 		this.connectThread = new ConnectThread(this);
 		super.getServer().getServicesManager().register(Connect.class, this.connect, this, ServicePriority.Normal);
 
-		super.getServer().getPluginManager().registerEvents(new LoginListener(this, payloadCache), this);
+		//super.getServer().getPluginManager().registerEvents(new LoginListener(this, payloadCache), this);
 		super.getServer().getScheduler().runTask(this, new Runnable() {
 			public void run() {
 				try {
